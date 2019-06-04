@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <style>
+.cat img{
+  max-height: 200px;
+}
+    </style>
+  </head>
+  <body>
+    <div></div>
+    <aside id="catlist"> 
+      <ol>
+      </ol>
+    </aside>
+    <section class="cats">
+    </section>
+    <template id="cat">
+      <div class="cat" id="cat-draft">
+        <h2 class="name"></h2>
+        <img >
+        <p class="counter"></p>
+      </div>
+    </template>
+  </body>
+  <script>
+    cats = {
+      'happy': { src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Kittyply_edit1.jpg/330px-Kittyply_edit1.jpg', clicks: 0},
+      'angry': { src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Domestic_Cat_Face_Shot.jpg/330px-Domestic_Cat_Face_Shot.jpg', clicks: 0},
+      'lovers': { src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Listen%2C_do_you_want_to_know_a_secret.jpg/330px-Listen%2C_do_you_want_to_know_a_secret.jpg', clicks:0},
+      'smart': { src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Jordi_cat_portrait.jpg/320px-Jordi_cat_portrait.jpg', clicks:0},
+      'dumb' : { src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Savannah_Cat_portrait.jpg/400px-Savannah_Cat_portrait.jpg', clicks:0}
+    };
+
+    function listCats(){
+      var list = '';
+      var catlist = Object.entries(cats);
+      console.log(catlist);
+      for (var i=0; i<catlist.length; i++){
+        var catname = catlist[i][0];
+        list+= '<li><a onclick="displayCat(\''+catname+'\')" >'+catname+'</a></li>';
+      }
+      console.log(list);
+      document.querySelector('#catlist ol').innerHTML = list;
+    }    
+    listCats();
+
+    function displayCat(catname){
+      catData = cats[catname];
+      var catTemplate = document.querySelector("template#cat");
+      // resets the cat display area
+      document.querySelector('section.cats').innerHTML=catTemplate.innerHTML;
+      var newcat = document.querySelector('#cat-draft');
+      newcat.setAttribute('id', catname);
+      newcat.querySelector('.name').innerHTML = catname;
+      var newImage = newcat.querySelector('img');
+      newImage.setAttribute('src', catData.src);
+      document.querySelector('.cat .counter').innerHTML = catData.clicks;
+      document.querySelectorAll('section.cats img').forEach( function(i){ i.addEventListener('click', addOne); });
+    }
+
+    function addOne(e){
+      var catimage = e.target;
+      console.log(e.target.parentElement);
+      counter = catimage.parentElement.querySelector('.counter');
+      counter.innerHTML = +counter.innerHTML+1;
+      console.log(e.target.parentElement);
+      cats[e.target.parentElement.id]['clicks']+=1;
+      console.log('clicked', e);
+    };
+  </script>
+</html>
