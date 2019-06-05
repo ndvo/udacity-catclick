@@ -1,8 +1,24 @@
 header{
   background: lightyellow;
-  padding: 1em;
+  padding: 2em;
 }
 .cat img{
   max-height: 200px;
+}
+#catlist{
+  float: left;
+  margin: 2em;
+  border: dashed 4px brown;
+  padding: 2em;
+  max-width: 300px;
+}
+#catlist a, .cat img{
+  cursor: pointer;
+}
+
+main{
+  border: solid thin silver;
+  padding: 2em;
+  min-height: 400px;
 }
     
