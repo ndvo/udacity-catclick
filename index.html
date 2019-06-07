@@ -12,32 +12,34 @@
       <h2>My cats</h2>
       <p>Choose among our best selection of cats.</p>
       <nav>
-        <ol>
+        <ol data-bind="foreach: catNickNames" >
+          <li><a data-bind="text: $data,   attr: {name: $data, id: 'list-item-'+$data }, click: $parent.displayCat" ></a></li>
         </ol>
       </nav>
     </aside>
     <main id="app">
-      <section id="current-cat">
+      <section id="current-cat" data-bind="with: currentCat()">
+        <div class="cat" id="cat-draft">
+          <h2 class="name" data-bind="text: name"></h2>
+          <img data-bind="click: $parent.addOne, attr: {src: src}">
+          <p><span data-bind="text: $data.clicks" class="counter"></span> clicks</p>
+          <button type="button" data-bind="click: $parent.editCat">Admin cat</button>
+        </div>
       </section>
       <section id="admin-cat">
       </section>
     </main>
     <template id="template-cat">
-      <div class="cat" id="cat-draft">
-        <h2 class="name"></h2>
-        <img >
-        <p><span class="counter"></span> clicks</p>
-        <button type="button" onclick="octopus.editCat()">Admin cat</button>
-      </div>
     </template>
     <template id="template-admin-cat">
       <form id="form-draft">
         <label for="name"><input name="name" type="text" placeholder="Cat's name"></label>
         <label for="url"><input name="url" type="text" placeholder="Cat's image URL"></label>
         <label for="clicks"><input name="clicks" type="text" placeholder="How many clicks"></label>
-        <button type="button" onclick="octopus.saveCat()">Save cat</button>
+        <button type="button" data-bind="click: saveCat">Save cat</button>
       </form>
     </template>
   </body>
+  <script src="knockout-3.5.0.js"></script>
   <script src="app.js"></script>
 </html>
